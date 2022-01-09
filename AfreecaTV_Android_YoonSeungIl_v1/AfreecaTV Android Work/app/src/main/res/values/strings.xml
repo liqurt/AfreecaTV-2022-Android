@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AfreecaTV_Android_YoonSeungIl</string>
+    <string name="search">Search</string>
+    <string name="search_warning_message">Please input keyword</string>
+</resources>

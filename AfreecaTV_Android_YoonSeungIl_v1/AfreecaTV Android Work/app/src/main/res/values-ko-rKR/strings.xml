@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">아프리카TV_안드로이드_윤승일</string>
+    <string name="search">검색</string>
+    <string name="search_warning_message">키워드를 입력해 주세요</string>
+</resources>
