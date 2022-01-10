@@ -15,15 +15,9 @@ class ApplicationClass : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        //앱이 처음 생성되면, retrofit 인스턴스 생성
         retrofit = Retrofit.Builder()
             .baseUrl(GithubURL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
-        val logMsg = "app 이 처음 생성됨!"
-        Log.d(logcatTag,logMsg)
-        Log.d(logcatTag,"$retrofit")
     }
 }
