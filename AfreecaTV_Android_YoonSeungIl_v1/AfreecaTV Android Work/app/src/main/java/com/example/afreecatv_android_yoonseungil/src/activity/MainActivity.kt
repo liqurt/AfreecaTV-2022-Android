@@ -1,7 +1,6 @@
 package com.example.afreecatv_android_yoonseungil.src.activity
 
 import android.app.Activity
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +25,10 @@ import retrofit2.Response
 import android.widget.Toast
 import com.example.afreecatv_android_yoonseungil.config.Constants.per_page
 import com.example.afreecatv_android_yoonseungil.databinding.ActivityMainBinding
+import android.view.KeyEvent
+
+import android.widget.TextView
+import android.widget.TextView.OnEditorActionListener
 
 
 class MainActivity : AppCompatActivity() {
@@ -61,6 +64,18 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        binding.keyword.apply {
+            imeOptions = EditorInfo.IME_ACTION_DONE
+            setOnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    currentKeyword = binding.keyword.text.toString()
+                    hideKeyboard()
+                    initialSearch()
+                    true
+                } else false
+            }
+        }
+
     }
 
     private fun hideKeyboard(){
@@ -78,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             requirePage = 1
             getRepositoryData(currentKeyword, requirePage)
-            "$currentKeyword 로 검색 중~"
+            "$currentKeyword 로 검색 합니다"
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
@@ -113,6 +128,9 @@ class MainActivity : AppCompatActivity() {
                         } else {
                             Log.d(logcatTag, "Error : $response")
                             requirePage -= 1
+                            if(response.code() == 403){
+                                Toast.makeText(this@MainActivity,"잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
 
