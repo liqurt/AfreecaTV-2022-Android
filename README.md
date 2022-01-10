@@ -16,3 +16,9 @@
 2. 검색버튼을 누릅니다.
 3. 잠시 후, 검색결과에서 10개의 항목을 검색창 아래에 리스트 형식으로 보여줍니다.
 4. 스크롤을 바닥까지 내리면 다음 10개의 항목을 보여줍니다.
+<br>
+
+### 스크린샷
+![앱 초기상태](https://github.com/liqurt/AfreecaTV-2022-Android/blob/master/screenshot/init.png?raw=true)
+![Love라는 키워드로 검색을 시작합니다](https://github.com/liqurt/AfreecaTV-2022-Android/blob/master/screenshot/Love.png?raw=true)
+![리스트의 끝으로 가면 로딩 후 더 많은 결과를 보여줍니다](https://github.com/liqurt/AfreecaTV-2022-Android/blob/master/screenshot/Loading.png?raw=true)
