@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // 키보드를 아래로 숨깁니다
     private fun hideKeyboard(){
         val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         var view = currentFocus
@@ -86,8 +87,8 @@ class MainActivity : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private fun initialSearch() {
-        itemList = mutableListOf()
+    private fun initialSearch() { // 검색버튼이나 키워드를 입력해서 검색합니다.
+        itemList = mutableListOf() // 리사이클러뷰에 매칭시킬 리스트를 비웁니다.
         val message: String = if (currentKeyword.isEmpty()) {
             "키워드를 입력해주세요"
         } else {
@@ -98,9 +99,9 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun additionalSearch() {
+    private fun additionalSearch() { // 스크롤을 내려 추가적으로 검색합니다.
         if (currentKeyword.isNotEmpty()) {
-            requirePage += 1
+            requirePage += 1 // 다음 페이지를 가져올 것 입니다.
             getRepositoryData(currentKeyword, requirePage)
         } else {
             Toast.makeText(this, "키워드를 입력해주세요", Toast.LENGTH_SHORT).show()
@@ -110,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     private fun getRepositoryData(q: String, page: Int) {
         binding.loading.visibility = View.VISIBLE
         val handler = Handler(Looper.getMainLooper())
-        handler.postDelayed({
+        handler.postDelayed({ // 초기에 만들었던 retrofit의 인스턴스와 api를 이용하여 "https://api.github.com/search/repositories/" 에 Get 요청을 보냅니다.
             val repositoryInterface = ApplicationClass.retrofit.create(RepositoryInterface::class.java)
             repositoryInterface.getRepository(q, per_page, page.toString()).enqueue(
                 object : Callback<Repository> {
@@ -127,8 +128,8 @@ class MainActivity : AppCompatActivity() {
                             itemListAdapter.notifyDataSetChanged()
                         } else {
                             Log.d(logcatTag, "Error : $response")
-                            requirePage -= 1
-                            if(response.code() == 403){
+                            requirePage -= 1 // 결국 '다음' 페이지의 결과를 보여주지 못했기에, 원상복귀 시킵니다.
+                            if(response.code() == 403){ // Github의 정책때문에, 짧은 시간 내에 여러번 request를 보낼수 없습니다. 이 경우, 사용자에게 양해를 구하는 메시지를 보여줬습니다.
                                 Toast.makeText(this@MainActivity,"잠시 후 다시 시도해주세요",Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -139,7 +140,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 })
             binding.loading.visibility = View.GONE
-        }, 1000)
+        }, 1000) // 딜레이 없이 위 작업을 진행하면, 너무 빨리 진행되서 로딩중임을 나타내는것도 순식간에 지나갔습니다. 부득이하게, 로딩중임을 보여주고자 1초의 딜레이를 주었습니다.
     }
 
 }

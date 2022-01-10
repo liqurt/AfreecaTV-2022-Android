@@ -13,6 +13,7 @@ class ApplicationClass : Application() {
         lateinit var retrofit : Retrofit
     }
 
+//    앱을 실행하면 config/ApplicationClass 에서 retrofit의 인스턴스를 만듭니다.
     override fun onCreate() {
         super.onCreate()
         retrofit = Retrofit.Builder()
